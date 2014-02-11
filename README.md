@@ -12,4 +12,4 @@ This repository contains the files necessary to replicate of these robot hands.
 
 For more information visit [Openbionics](http://www.openbionics.org/)
 
-[![robotHand_v1_cad](https://github.com/zisi/openBionics/blob/master/pics/robotHand.JPG)]
+[![robotHand_v1_cad](https://github.com/zisi/openBionics/blob/master/pics/robotHand.JPG)](https://github.com/zisi/openBionics/blob/master/pics/robotHand.JPG)
