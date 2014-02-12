@@ -13,7 +13,8 @@ The service node (robotHand.py), sends the desired aperture to the robot hand.
 
 Install this ROS package, placing the folder, in your ROS workspace in /src directory. 
 Then you must write in terminal 
-	$catkin_make
+	
+	<$catkin_make>
 	
 You have successfully installed the package.
 
@@ -24,10 +25,13 @@ Upload with [arduino IDE](http://arduino.cc/en/main/software) the program to ard
 # How to run ROS nodes
 
 To run this ROS package at first you must run 
-	$roscore
+
+	roscore
 	
 Then in another terminal tab you have to execute as super-user the command 
-	#rosrun openbionics/robotHand.py <serial_port> 
+	
+	#rosrun openbionics/robotHand.py serial_port 
+
 Replace <serial_port> with the port where your arduino is connected e.g /dev/ttyACM0. 
 
 To send the aperture value to the robot hand you have to run the command
