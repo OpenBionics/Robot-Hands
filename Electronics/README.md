@@ -4,7 +4,7 @@ This folder include Robot hands electronics (schematic, PCB Layout and arduino M
 In order to control the servo motor that actuates the robot hand we use arduino micro with
 a custom "shield".
 
-For more information about [Arduino Micro].(http://arduino.cc/en/Main/ArduinoBoardMicro)
+For more information about [Arduino Micro](http://arduino.cc/en/Main/ArduinoBoardMicro)
 
 #Pinout
 Pin Mapping of the Arduino Micro "shield"
