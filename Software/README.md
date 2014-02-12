@@ -14,7 +14,7 @@ The service node (robotHand.py), sends the desired aperture to the robot hand.
 Install this ROS package, placing the folder, in your ROS workspace in /src directory. 
 Then you must write in terminal 
 	
-	<$catkin_make>
+	$catkin_make
 	
 You have successfully installed the package.
 
