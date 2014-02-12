@@ -26,14 +26,16 @@ Upload with [arduino IDE](http://arduino.cc/en/main/software) the program to ard
 
 To run this ROS package at first you must run 
 
-	roscore
+	$roscore
 	
 Then in another terminal tab you have to execute as super-user the command 
 	
-	#rosrun openbionics/robotHand.py serial_port 
+	#rosrun openbionics/robotHand.py "serial_port" 
 
-Replace <serial_port> with the port where your arduino is connected e.g /dev/ttyACM0. 
+Replace "serial_port" with the port where your arduino is connected e.g /dev/ttyACM0. 
 
 To send the aperture value to the robot hand you have to run the command
-	$rosrun openbionics/Main.py <aperture> 
-Replace the <aperture> with a desired number between 0 and 1.
+
+	$rosrun openbionics/Main.py "aperture"
+	 
+Replace the "aperture" with a desired number between 0 and 1.
