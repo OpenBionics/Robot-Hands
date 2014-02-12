@@ -1,9 +1,6 @@
 # Introduction
 
 The serial communication between our robot hands and the Planner PC, is implemented with Robot Operating System (ROS). 
-
-# OpenBionics ROS Package Directions
-
 The planner-PC runs two nodes, the client node (Main.py) and the service node (robotHand.py).
 The client node (Main.py), receives from the user the aperture value 
 (0 when the hand is fully open and 1 when the hand is fully close).
