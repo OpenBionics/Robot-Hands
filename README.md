@@ -10,6 +10,6 @@ robot hands and myoelectric prosthetic devices, that can be easily reproduced us
 
 This repository contains the files necessary to replicate of these robot hands.
 
-For more information visit [Openbionics](http://www.openbionics.org/)
+For more information visit [OpenBionics](http://www.openbionics.org/)
 
 ![robotHand_v1_cad](https://raw.github.com/zisi/openBionics/master/pics/robotHand.JPG)
