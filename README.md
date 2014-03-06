@@ -1,6 +1,6 @@
 # Overview
 
-Open bionics is an initiative for the development of:
+OpenBionics is an initiative for the development of:
 * open source
 * affordable
 * light-weight
