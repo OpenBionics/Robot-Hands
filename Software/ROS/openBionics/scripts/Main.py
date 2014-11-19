@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-import roslib; roslib.load_manifest('openbionics')
+import roslib; roslib.load_manifest('openBionics')
 
 import sys
 
 import rospy
-from openbionics.srv import *
+from openBionics.srv import *
 
 def robotHand_client(req):
 	rospy.wait_for_service('robotHand_srv')

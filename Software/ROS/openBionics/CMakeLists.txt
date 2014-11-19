@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(openbionics)
+project(openBionics)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -54,7 +54,7 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES openbionics
+  LIBRARIES openBionics
   CATKIN_DEPENDS roscpp rospy std_msgs
   DEPENDS system_lib
 )
@@ -71,19 +71,19 @@ include_directories(
 )
 
 ## Declare a cpp library
-# add_library(openbionics
-#   src/${PROJECT_NAME}/openbionics.cpp
+# add_library(openBionics
+#   src/${PROJECT_NAME}/openBionics.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(openbionics_node src/openbionics_node.cpp)
+# add_executable(openBionics_node src/openBionics_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(openbionics_node openbionics_generate_messages_cpp)
+# add_dependencies(openBionics_node openBionics_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(openbionics_node
+# target_link_libraries(openBionics_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -102,7 +102,7 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS openbionics openbionics_node
+# install(TARGETS openBionics openBionics_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -127,7 +127,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_openbionics.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_openBionics.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

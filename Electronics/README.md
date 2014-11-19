@@ -9,4 +9,4 @@ For more information about [Arduino Micro](http://arduino.cc/en/Main/ArduinoBoar
 #Pinout
 Pin Mapping of the Arduino Micro "shield"
 
-![robotHand_v1_PCB](https://raw.github.com/zisi/openBionics/master/pics/PCB.png)
+![PCB](https://raw.github.com/zisi/openBionics/master/pics/PCB.png)

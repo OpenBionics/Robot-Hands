@@ -1,6 +1,6 @@
 #!/usr/bin/env python
  
-from openbionics.srv import *
+from openBionics.srv import *
 import rospy
 
 from serial import *
