@@ -1,15 +1,42 @@
+#include <Arduino.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 #include <Servo.h>
+void setup();
+void loop();
+void servoMove(float final_pos);
+void control(float set_point);
+int servoLoad();
+int filter_load(int load);
+void serialWrite(int package);
+int adc(int pin);
+#line 1 "src/sketch.ino"
+//#include <string.h>
+//#include <stdlib.h>
+//#include <math.h>
+//#include <Servo.h>
 
 #define SERVO_PIN 6
+#define LOAD_PIN 8
 #define TS 0.00025 
-#define TF 1 
+#define TF 0.5
 /*1<= K <=2*/
 #define K 1.5
 #define MAX_PULSE 2400
-#define MIN_PULSE 600
+#define MIN_PULSE 544
+/*
+SHIFT(k)    Bandwidth (Normalized to 1Hz)   Rise Time (samples)
+ 1    			0.1197                          3
+ 2    			0.0466                          8
+ 3    			0.0217                          16
+ 4    			0.0104                          34
+ 5    			0.0051                          69
+ 6    			0.0026                          140
+ 7    			0.0012                          280
+ 8    			0.0007                          561
+*/
+#define FILTER_SHIFT_LOAD 8
 
 Servo servo;
 
@@ -45,11 +72,9 @@ void loop()
         i++;
       }
       counter = 0;
-      int target_pulse = map(input[0]*10, 0, 10, MIN_PULSE, MAX_PULSE);
-      /*Move servo and write to serial the Load*/
-      servoMove(target_pulse);
-      /*Direct servo control without Trapezoidal velocity profile*/
-      //control(target_pulse);    
+      int target_pulse = map(input[0]*10, 0, 100, MIN_PULSE, MAX_PULSE);
+      /*Move servo and write to serial*/
+      servoMove(target_pulse);    
     }
     /*Fill the buffer with incoming data*/
     else {
@@ -62,6 +87,8 @@ void loop()
 /*Trapezoidal velocity profile*/
 void servoMove(float final_pos)
 {
+	digitalWrite(13,HIGH);
+	
   //unsigned long t_start,t_stop;
   
   static float init_pos = 0;
@@ -96,12 +123,22 @@ void servoMove(float final_pos)
     t = t+TS;
     /*Servo move*/
     control(target_pos);
+     
   }
+  
+  delay(100);
+  serialWrite(servoLoad());
+  
   init_pos = target_pos;
   t = 0;
   
+  /*Stop write to serial*/
+  //serialWrite(-1); 
+  
   //t_stop = micros();
   //Serial.println((t_stop-t_start));
+  
+  digitalWrite(13,LOW);
   
 }
 
@@ -111,4 +148,34 @@ void control(float set_point)
   int pulse;
   pulse = set_point;
   servo.writeMicroseconds(pulse);
+}
+
+/*Read the servo Load*/
+int servoLoad()
+{	
+	int load;
+	//load = filter_load(adc(LOAD_PIN));
+	load = adc(LOAD_PIN);
+	return load;
+}
+
+/*Simple digital Low-pass filter*/
+int filter_load(int load)
+{
+	static long filterLoad = 512;
+	filterLoad = filterLoad - (filterLoad >> FILTER_SHIFT_LOAD) + load;
+	return (int) (filterLoad >> FILTER_SHIFT_LOAD);
+}
+
+/*Serial Communication*/
+void serialWrite(int package)
+{
+	Serial.print(package);
+	Serial.println(";");
+}
+	
+/*Analog to Digital conversion*/
+int adc(int pin)
+{
+  return(analogRead(pin));
 }

@@ -1,0 +1,9 @@
+[build]
+board-model = micro
+
+[upload]
+board-model = micro
+serial-port = /dev/ttyACM0
+
+[serial]
+serial-port = /dev/ttyACM0

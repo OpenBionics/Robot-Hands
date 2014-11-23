@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/micro/src/sketch.cpp : src/sketch.ino
+	@mkdir -p .build/micro/src
+	@echo [93msrc/sketch.ino[0m
+	@/usr/bin/ino preproc -d /home/azisi/Documents/Apps/arduino-1.0.5 -o $@ $^
+
+
+all : .build/micro/src/sketch.cpp
+	@true
+

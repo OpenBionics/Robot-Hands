@@ -1,0 +1,28 @@
+
+
+
+
+
+
+
+
+	
+
+
+
+.build/micro/Servo/Servo.d : /home/azisi/Documents/Apps/arduino-1.0.5/libraries/Servo/Servo.cpp
+	@mkdir -p .build/micro/Servo
+	@/home/azisi/Documents/Apps/arduino-1.0.5/hardware/tools/avr/bin/avr-gcc -mmcu=atmega32u4 -DF_CPU=16000000L -DARDUINO=105 -I/home/azisi/Documents/Apps/arduino-1.0.5/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w -DUSB_VID=0x2341 -DUSB_PID=0x8037 -I/home/azisi/Documents/Apps/arduino-1.0.5/hardware/arduino/variants/micro -I/home/azisi/Documents/Apps/arduino-1.0.5/hardware/arduino/cores/arduino -I/home/azisi/Documents/Apps/arduino-1.0.5/hardware/arduino/cores/arduino/avr-libc -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/Esplora -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/Ethernet -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/Ethernet/utility -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/SPI -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/SoftwareSerial -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/Stepper -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/DynamixelSerial -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/WiFi -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/WiFi/utility -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/DynamixelSoftSerial -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/TFT -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/TFT/utility -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/SD -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/SD/utility -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/LiquidCrystal -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/Servo -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/Wire -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/Wire/utility -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/Firmata -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/EEPROM -I/home/azisi/Documents/Apps/arduino-1.0.5/libraries/GSM  -MM $^ > $@
+	
+	@printf ".build/micro/Servo/Servo.d .build/micro/Servo/" | cat - $@ > $@~ && mv $@~ $@
+
+
+
+.build/micro/Servo/dependencies.d : .build/micro/Servo/Servo.d
+	@echo [96mScanning dependencies of Servo[0m
+	@mkdir -p .build/micro/Servo
+	@cat $^ > $@;
+
+all : .build/micro/Servo/dependencies.d
+	@true
+
