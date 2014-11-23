@@ -1,10 +1,9 @@
 # Introduction
 
 The serial communication between our robot hands and the Planner PC, is implemented with Robot Operating System (ROS). 
-The planner-PC runs two nodes, the client node (Main.py) and the service node (robotHand.py).
-The client node (Main.py), receives from the user the aperture value 
-(0 when the hand is fully open and 1 when the hand is fully close).
-The service node (robotHand.py), sends the desired aperture to the robot hand. 
+The planner-PC runs two nodes, the client node (Main.py) and the server node (stdServo.py).
+The client node (Main.py), receives from the user the angle of RC servo. 
+The server node (stdServo.py), sends the desired angle to the robot hand. 
 
 # ROS Installation
 
@@ -13,7 +12,10 @@ Then you must write in terminal
 	
 	$catkin_make
 	
-You have successfully installed the package.
+You have successfully installed the package. Also the script file’s mode must be executable.
+
+	$chmod +x Main.py
+	$chmod +x stdServo.py
 
 # Arduino Installation
 
@@ -21,18 +23,14 @@ Upload with [arduino IDE](http://arduino.cc/en/main/software) the program to ard
 
 # How to run ROS nodes
 
-To run this ROS package at first you must run 
+To run this ROS package you must run the launch file.
 
-	$roscore
+	$roslaunch openbionics stdServo.launch 
+
+In the launch file (stdServo.launch) you can set up the usb port for serial commumnication with robot hand.	 
 	
-Then in another terminal tab you have to execute as super-user the command 
-	
-	#rosrun openbionics/robotHand.py "serial_port" 
+To send the servo angle to the robot hand you have to run the command
 
-Replace "serial_port" with the port where your arduino is connected e.g /dev/ttyACM0. 
-
-To send the aperture value to the robot hand you have to run the command
-
-	$rosrun openbionics/Main.py "aperture"
+	$rosrun openbionics Main.py arg
 	 
-Replace the "aperture" with a desired number between 0 and 1.
+Replace the arg with a desired number between 0 and 218 degrees.
