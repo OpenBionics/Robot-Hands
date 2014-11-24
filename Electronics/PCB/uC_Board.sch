@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="1.27" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.254" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -9328,14 +9328,14 @@ Arduino Micro Pro. </text>
 <label x="87.63" y="129.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="B" pin="A4"/>
-<wire x1="58.42" y1="121.92" x2="54.61" y2="121.92" width="0.1524" layer="91"/>
-<label x="48.26" y="121.92" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="J1" gate="J" pin="4"/>
 <wire x1="129.54" y1="135.89" x2="133.35" y2="135.89" width="0.1524" layer="91"/>
 <label x="133.35" y="135.89" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="A" pin="A4"/>
+<wire x1="58.42" y1="144.78" x2="54.61" y2="144.78" width="0.1524" layer="91"/>
+<label x="48.26" y="144.78" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="TX" class="0">
