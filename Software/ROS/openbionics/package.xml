@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <package>
   <name>openbionics</name>
+  <version>0.0.1</version>
   <description>The openbionics package</description>
 
   <maintainer email="azisi@windowslive.com">azisi</maintainer>
+
+  <license>TODO</license>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>message_generation</build_depend>

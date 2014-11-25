@@ -35,6 +35,8 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
    FILES
    stdServo.srv
+   HandAX12.srv
+   Finger.srv
 )
 
 ## Generate added messages and services with any dependencies listed here
