@@ -1,4 +1,5 @@
+string cmd
 float32 Angle
 ---
-float32 Load
 float32 Pos
+float32 Load

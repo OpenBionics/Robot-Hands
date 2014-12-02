@@ -7,6 +7,7 @@ import sys
 import rospy
 from openbionics.srv import *
 
+# Client for robot hand with stdservo
 def stdServo_client(req1, req2):
 	rospy.wait_for_service('stdServo_srv')
 	try:
@@ -15,31 +16,41 @@ def stdServo_client(req1, req2):
  	except rospy.ServiceException, e:
  		print "Service call failed: %s"%e
 
-def robotFinger_client(req):
-	rospy.wait_for_service('robotFinger_srv')
+# Client for robot hand with AX12 servo
+def robotHand_client(req1, req2):
+	rospy.wait_for_service('robotHand_srv')
 	try:
-		robotFinger_srv = rospy.ServiceProxy('robotFinger_srv', Finger)
- 		resp = robotFinger_srv(req)
+		robotHand_srv = rospy.ServiceProxy('robotHand_srv', HandAX12)
+ 		resp = robotHand_srv(req1, req2)
  		return resp
  	except rospy.ServiceException, e:
  		print "Service call failed: %s"%e
 
 if __name__ == "__main__":
-	if len(sys.argv) == 3:
-		aperture = float(sys.argv[2])
-		cmd = str(sys.argv[1])
-		if (cmd == 'PS'):
-			cmd = 'PS'
-			stdServo_client(cmd, aperture)
-		if (cmd == 'H'):
-			if (aperture < 0 or aperture > 10):
-				print "[ERROR]: Bad input [0,10]"
-				sys.exit(1)
+	if len(sys.argv) == 4:
+		# Servo model: AX12 or STD
+		model = str(sys.argv[1])
+		# Command PS or FC (todo)
+		cmd = str(sys.argv[2])
+		# Angle of servo or desire force
+		set_point = float(sys.argv[3])
+		if (model == 'STD'):
+			if (cmd == 'PS'):
+				stdServo_client(cmd, set_point)
 			else:
-				print "%s"%robotHand_client(aperture)
-		elif(cmd == 'F'):
-			if (aperture < 0 or aperture > 100):
-				print "[ERROR]: Bad input [0,100]"
+				print "[ERROR]: Bad input"
 				sys.exit(1)
+		elif (model == 'AX12'):
+			if (cmd == 'PS'):
+				print "%s"%robotHand_client(cmd, set_point)
+			elif (cmd == 'FC'):
+				print "%s"%robotHand_client(cmd, set_point)
 			else:
-				print "%s"%robotFinger_client(aperture)
+				print "[ERROR]: Bad input"
+				sys.exit(1)
+		else:
+			print "[ERROR]: Wrong Command"
+			sys.exit(2)
+	else:
+		print "[ERROR]: Wrong number of arguments"
+		sys.exit(0)

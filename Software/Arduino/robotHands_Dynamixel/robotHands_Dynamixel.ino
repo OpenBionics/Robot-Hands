@@ -4,80 +4,96 @@
 #include <math.h>
 #include <stdio.h>
 
-#define MAX_POS 0
-#define MIN_POS 800
-
-struct state {
-	int Position;
-	int Load;
-};
-
-typedef struct state State;
-
-State servoMove(float final_pos)
-{
-  State servoState;
-  
-  Dynamixel.ledStatus(1,ON);
-  
-  Dynamixel.move(1,final_pos);
-  delay(1000);
-
-  servoState.Position = Dynamixel.readPosition(1);
-  servoState.Load = Dynamixel.readLoad(1);
-    
-  Dynamixel.ledStatus(1,OFF);
-  
-  return(servoState);
-}
-
-/*Serial Communication*/
-void serialWrite(State package)
-{
-	Serial.print(package.Load);
-	Serial.println(";");
-}
+#define DYNPIN 2
+#define MAXPOS 1023
+#define MINPOS 100
 
 void setup()
 {
-	Serial.begin(115200);
-	
-	Dynamixel.begin(1000000,2);
-	delay(1000);typedef struct record Record;
-	//Initialize dynamixel servo
+  /* Baud Rate 115200 */
+  Serial.begin(115200);
+  /* Initialize Dynemixel Serial interface */
+  Dynamixel.begin(1000000,DYNPIN);  
+  Dynamixel.ledStatus(1,ON);
+  Dynamixel.move(1,MAXPOS);
+  delay(1000);
+  Dynamixel.ledStatus(1,OFF);
 }
 
 void loop()
-{ 
+{
   /*Serial*/
   char buffer[256];
   char incomingByte;
-  char *p=buffer;
+  char *data = buffer;
   char *str;
-  float input[2];
-  static int i,counter=0;
+  float rx[4];
+  static int i,counter = 0;
   
   /*Read from serial*/
-  while (Serial.available() > 0){
+  while (Serial.available() > 0)
+  {
     incomingByte = Serial.read();
-    /*new data*/
-    if (incomingByte == '\n'){
-      p=buffer;
-      i=0;
-      while((str = strtok_r(p, ";" , &p))){
-        input[i] = atof(str);
-        i++;
+    /* New data */
+    if (incomingByte == '\n')
+    {
+      buffer[counter]=0;
+      if (buffer[0] == 'P' && buffer[1] == 'S')
+      {
+        strncpy(data, buffer+2, 100);
+        i=0;
+        while ((str = strtok_r(data, ";" , &data)))
+        {
+          rx[i] = atof(str);
+          i++;
+        }
+        counter = 0;
+        /* Move servo with Position Control */
+        servoMove(rx[0]);      
       }
-      counter = 0;
-      int target_pos = map(input[0]*10, 0, 100, MIN_POS, MAX_POS);
-      /*Move servo and write to serial*/
-      State servoState = servoMove(target_pos);
-      serialWrite(servoState);   
+      else if (buffer[0] == 'F' && buffer[1] == 'C')
+      {
+        strncpy(data, buffer+2, 100);
+        i=0;
+        while ((str = strtok_r(data, ";" , &data)))
+        {
+          rx[i] = atof(str);
+          i++;
+        }
+        counter = 0;
+        /* Move servo wiht Force Control */
+        force();      
+      }
     }
-    /*Fill the buffer with incoming data*/
-    else {
+    /* Fill the buffer with incoming data */
+    else 
+    {
       buffer[counter] = incomingByte;
-      counter++;
+      counter ++;
     }
   }
+}
+
+/* Posotion Control */
+void servoMove(float final_pos)
+{ 
+  if (final_pos >= MINPOS && final_pos <=  MAXPOS)
+  {
+    Dynamixel.move(1,final_pos);
+    delay(50);
+
+    int angle = Dynamixel.readPosition(1);
+    int load = Dynamixel.readLoad(1);
+    /* Serial print to Host-PC */
+    Serial.print(angle);
+    Serial.print(";");
+    Serial.print(load);
+    Serial.println(";");
+  }
+}
+
+/* Force Control */
+void force()
+{
+  Serial.println("ToDo");
 }

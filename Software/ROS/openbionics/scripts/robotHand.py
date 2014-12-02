@@ -2,53 +2,53 @@
  
 from openbionics.srv import *
 import rospy
+from std_msgs.msg import String
+
 
 from serial import *
 import time 
 
 def handle_robotHand_srv(req):
-	f = open("/home/azisi/Desktop/measures.txt","a")
-	robotHand.open()
-	#Write data package
-	robotHand.write(str(req.Aperture))
-	robotHand.write("\n")		
-	robotHand.close()
-	print "[INFO] Send to robotHand"
-	print "%s"%(req)
+	# Write data package
+	SerialWrite(req.cmd, req.Angle)
 	#Read data package
 	time.sleep(0.1)	
 	robotHand.open()
-	f.write("%.3f \t" %(req.Aperture))
-	#print "[INFO] Receive from robotHand"
 	inByte = robotHand.readline()
 	data = str(inByte).split(';')
-	load = float(data[0])
-	#pos = float(data[1])
-	pos = -1
-	f.write("%.3f \t %.3f \n" %(load,pos))
-	
-	#print "[INFO] Receive from robotHand"
-	#while 1:
-	#	inByte = robotHand.readline()
-	#	data = str(inByte).split(';')
-	#	load = float(data[0])
-	#	pos = float(data[1])
-	#	if load != -1 and pos != -1:
-	#		f.write("%s \t %s \n" %(load,pos))
-	#	else:
-	#		f.write("\n\n")
-	#		break
-	
-	f.close()
+	pos = float(data[0])
+	load = float(data[1])
 	robotHand.close()
-	return handResponse(load,pos)
+	# Publish Data to Hand Topic
+	state = [req.Angle, pos, load]
+	publisher(state)
+	# Return Data to Client
+	return HandAX12Response(pos, load)
+	
+# Publish Data to Hand Topic
+def publisher(State):
+	pub = rospy.Publisher("Hand", String, queue_size=10)
+	r = rospy.Rate(400)
+	pub.publish(str(State))
+	r.sleep()
 
-def robotHand_srv_server():
-	rospy.init_node('robotHand_srv_server')
+# Send angle to robot hand 
+def SerialWrite(tx1, tx2):
+	#Send to serial	
+	robotHand.open()
+	robotHand.write(str(tx1))
+	robotHand.write(str(tx2))
+	robotHand.write("\n")
+	robotHand.close()
+
+# Initialize ROS Node
+def robotHand_service():
+	rospy.init_node('robotHand_service')
     	s = rospy.Service('robotHand_srv', HandAX12, handle_robotHand_srv)
     	print "[INFO] robotHand is ready"
     	rospy.spin()
 
+# Main Function 
 if __name__ == "__main__":
 	global robotHand
 	usb = sys.argv[1]
@@ -56,7 +56,7 @@ if __name__ == "__main__":
 		robotHand = Serial(usb, 115200, timeout=2)
 	except serial.SerialException:
 		sys.exit(1)
-
+	# Close the Serial Port
 	robotHand.close()
-
-   	robotHand_srv_server()
+	# Call robot Hand service
+   	robotHand_service()
