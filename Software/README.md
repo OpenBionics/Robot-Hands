@@ -20,7 +20,9 @@ You have successfully installed the package. Also the script file’s mode must 
 
 # Arduino Installation
 
-Upload with [arduino IDE](http://arduino.cc/en/main/software) the program to arduino Micro board. 
+Upload with [arduino IDE](http://arduino.cc/en/main/software) the program to arduino Micro board.
+
+For Dynamixel AX12 servo we use this [library](http://savageelectronics.blogspot.gr/2011/01/arduino-y-dynamixel-ax-12.html)
 
 # How to run ROS nodes
 
