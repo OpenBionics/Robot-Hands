@@ -12,6 +12,6 @@ This repository contains the files necessary to replicate of these robot hands.
 
 For more information visit [OpenBionics](http://www.openbionics.org/)
 
-We have published a complete tutorial for the replication of our hands. The tutorial can be found [here](http://www.openbionics.org/TR2015_OpenBionics_RobotHandsGuide.pdf)
+We have published a complete tutorial for the replication of our hands. The tutorial can be found [here.](http://www.openbionics.org/TR2015_OpenBionics_RobotHandsGuide.pdf)
 
 ![robotHand](https://raw.github.com/zisi/openBionics/master/Pics/pic7.png)
