@@ -1,12 +1,12 @@
 # Electronics
 
-This folder include Robot hands electronics (schematic, PCB Layout and openbionics library).
-In order to control the RC or AX12 servo motor we use arduino micro pro with a custom "shield".
+This folder presents the robot hands electronics (the Schematic, the PCB Layout and the OpenBionics library).
+In order to control the RC or the AX12 servo motor, we use the arduino Micro Pro microcontroller platform, combined with a custom "shield".
 
-For more information about [Arduino Micro](http://arduino.cc/en/Main/ArduinoBoardMicro)
+More information about Arduino Micro can be found [here](http://arduino.cc/en/Main/ArduinoBoardMicro)
 
 # Pinout
-Pin Mapping of the Arduino Micro Pro "shield"
+The Pin Mapping of the Arduino Micro Pro "shield".
 
 ![PCB](https://raw.github.com/zisi/openBionics/master/Pics/PCB1.png)
 
@@ -27,6 +27,6 @@ Pin Mapping of the Arduino Micro Pro "shield"
 
 # Mount PCB in to Robot Hands
 
-In order to place the PCB in Robot Hands, you can screw it in the PCBMount.STL part with two M2x8 and M2 nuts.
+In order to place the PCB onto the robot hands, you can attach it at the PCBMount.STL part, using two M2x8 and M2 nuts.
 
 ![PCBMount](https://raw.github.com/zisi/openBionics/master/Pics/PCB2.jpg)
