@@ -19,7 +19,7 @@ You have successfully installed the package. Make sure that all files are execut
 
 Upload with the [arduino IDE](http://arduino.cc/en/main/software) the program to the arduino Micro board.
 
-For the Dynamixel AX12 servo we use this [library](http://savageelectronics.blogspot.gr/2011/01/arduino-y-dynamixel-ax-12.html)
+For the Dynamixel AX12 servo we use this [library.](http://savageelectronics.blogspot.gr/2011/01/arduino-y-dynamixel-ax-12.html)
 
 # How to run ROS nodes
 
