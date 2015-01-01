@@ -8,7 +8,7 @@ OpenBionics is an initiative for the development of:
 
 robot hands and myoelectric prosthetic devices, that can be easily reproduced using off-the-shelf materials.
 
-This repository contains all the necessary files, to replicate our robot hands
+This repository contains all the necessary files, to replicate our robot hands.
 
 For more information visit [OpenBionics.](http://www.openbionics.org/)
 
