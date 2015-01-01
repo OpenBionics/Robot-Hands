@@ -29,4 +29,4 @@ Pin Mapping of the Arduino Micro Pro "shield"
 
 In order to place the PCB in Robot Hands, you can screw it in the PCBMount.STL part with two M2x8 and M2 nuts.
 
-![PCBMount](https://raw.github.com/zisi/openBionics/master/Pics/PCB2.png)
+![PCBMount](https://raw.github.com/zisi/openBionics/master/Pics/PCB2.jpg)
