@@ -1,6 +1,6 @@
 # Introduction
 
-The serial communication between our robot hands and the Planner PC, is implemented with the Robot Operating System (ROS). The Planner PC runs two nodes, the client node (Main.py) and the server node (stdServo.py or robotHand.py). The client node (Main.py), receives from the user the angle of the servo motor. The server node, sends the desired angle to the robot hand.
+<p style='text-align: center;'>The serial communication between our robot hands and the Planner PC, is implemented with the Robot Operating System (ROS). The Planner PC runs two nodes, the client node (Main.py) and the server node (stdServo.py or robotHand.py). The client node (Main.py), receives from the user the angle of the servo motor. The server node, sends the desired angle to the robot hand.
 
 # ROS Installation
 
