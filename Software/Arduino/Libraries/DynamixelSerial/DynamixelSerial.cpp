@@ -70,13 +70,21 @@
 #include "DynamixelSerial.h"
 
 // Macro for the selection of the Serial Port
-
-#define sendData(args)  (Serial.write(args))    // Write Over Serial
-#define availableData() (Serial.available())    // Check Serial Data Available
-#define readData()      (Serial.read())         // Read Serial Data
-#define peekData()      (Serial.peek())         // Peek Serial Data
-#define beginCom(args)  (Serial.begin(args))    // Begin Serial Comunication
-#define endCom()        (Serial.end())          // End Serial Comunication
+#if defined (__AVR_ATmega1280__) || defined (__AVR_ATmega128__) || defined (__AVR_ATmega2560__) || defined (__AVR_ATmega32U4__)
+	#define sendData(args)  (Serial1.write(args))    // Write Over Serial
+	#define availableData() (Serial1.available())    // Check Serial Data Available
+	#define readData()      (Serial1.read())         // Read Serial Data
+	#define peekData()      (Serial1.peek())         // Peek Serial Data
+	#define beginCom(args)  (Serial1.begin(args))    // Begin Serial Comunication
+	#define endCom()        (Serial1.end())          // End Serial Comunication
+#else
+	#define sendData(args)  (Serial.write(args))    // Write Over Serial
+	#define availableData() (Serial.available())    // Check Serial Data Available
+	#define readData()      (Serial.read())         // Read Serial Data
+	#define peekData()      (Serial.peek())         // Peek Serial Data
+	#define beginCom(args)  (Serial.begin(args))    // Begin Serial Comunication
+	#define endCom()        (Serial.end())          // End Serial Comunication
+#endif
 
 // Macro for Timing
 
