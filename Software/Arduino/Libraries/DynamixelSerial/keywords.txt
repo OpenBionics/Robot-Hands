@@ -1,0 +1,51 @@
+# Syntax Coloring Map for Dynamixel Library Smart Actuators
+
+# Datatypes (KEYWORD1)
+
+DynamixelSerial        	KEYWORD1
+Dynamixel        	KEYWORD1
+Ax12            	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+
+begin           	KEYWORD2
+end             	KEYWORD2
+reset           	KEYWORD2
+ping            	KEYWORD2
+setID           	KEYWORD2
+setBD           	KEYWORD2
+move             	KEYWORD2
+moveSpeed       	KEYWORD2
+setEndless      	KEYWORD2
+turn            	KEYWORD2
+moveRW           	KEYWORD2
+moveSpeedRW     	KEYWORD2
+action          	KEYWORD2
+torqueStatus    	KEYWORD2	
+ledStatus       	KEYWORD2
+setTempLimit    	KEYWORD2
+setAngleLimit   	KEYWORD2
+setVoltageLimit 	KEYWORD2
+setMaxTorque      	KEYWORD2
+setSRL          	KEYWORD2
+setRDT              	KEYWORD2
+setLEDAlarm      	KEYWORD2
+setShutdownAlarm   	KEYWORD2
+setCMargin         	KEYWORD2
+setCSlope          	KEYWORD2
+setPunch           	KEYWORD2
+moving            	KEYWORD2
+lockRegister       	KEYWORD2
+RWStatus        	KEYWORD2
+readSpeed        	KEYWORD2
+readLoad            	KEYWORD2
+readPosition    	KEYWORD2
+readTemperature 	KEYWORD2
+readVoltage     	KEYWORD2	
+
+# Constants (LITERAL1)
+
+OFF     	        LITERAL1
+ON              	LITERAL1
+LEFT            	LITERAL1
+RIGTH           	LITERAL1
