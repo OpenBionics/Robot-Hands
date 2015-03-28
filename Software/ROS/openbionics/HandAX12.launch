@@ -1,6 +1,0 @@
-<launch>
-	<!-- args: Serial port of arduino -->
-	<node name="AX12Node" pkg="openbionics" type="robotHand.py" args="/dev/ttyACM0" output="screen"/>
-	<!--  -->
-	<node name="RobotHandState" pkg="openbionics" type="publisher.py" output="screen"/>
-</launch>
