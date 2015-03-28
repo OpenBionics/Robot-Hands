@@ -4,11 +4,11 @@
 In order to control the robot hand, we use the Robot Operating System (ROS) and arduino micro board.
 The Planner PC runs one ROS node (RobotHand.py), that is responsible for sending commands, for parsing the data packages which are send by 
 arduino micro and for publishing the received information in the ROS topics.
-The arduno micro is responsible to parse the planner pc commands, to drive the different servo motors and is respond to the planner pc with
+The arduino micro is responsible to parse the planner pc commands, to drive the different servo motors and is respond to the planner pc with
 the information about robot hand.
 </p>
 
-     # ROS Installation
+# ROS Installation
 
 Install this ROS package placing the folder in the /src directory of your ROS workspace. Build the package using the following command:
 
