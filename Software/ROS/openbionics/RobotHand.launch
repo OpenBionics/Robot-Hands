@@ -1,0 +1,4 @@
+<launch>
+	<!-- args: Serial port of arduino -->
+	<node name="RobotHandNode" pkg="openbionics" type="RobotHand.py" args="/dev/ttyACM0" output="screen"/>
+</launch>
