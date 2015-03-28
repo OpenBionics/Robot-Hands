@@ -1,6 +1,12 @@
 # Introduction
 
-<p style='text-align: justify;'>The serial communication between our robot hands and the Planner PC, is implemented with the Robot Operating System (ROS). The Planner PC runs two nodes, the client node (Main.py) and the server node (stdServo.py or robotHand.py). The client node (Main.py), receives from the user the angle of the servo motor. The server node, sends the desired angle to the robot hand.</p>
+<p style='text-align: justify;'>
+In order to control the robot hand, we use the Robot Operating System (ROS) and arduino micro board.
+The Planner PC runs one ROS node (RobotHand.py), that is responsible for sending commands, for parsing the data packages which are send by 
+arduino micro and for publishing the received information in the ROS topics.
+The arduno micro is responsible to parse the planner pc commands, to drive the different servo motors and is respond to the planner pc with
+the information about robot hand.
+</p>
 
      # ROS Installation
 
@@ -8,32 +14,52 @@ Install this ROS package placing the folder in the /src directory of your ROS wo
 
     $catkin_make
 
-You have successfully installed the package. Make sure that all files are executable, using the following commands:
+You have successfully installed the package. Make sure that all files are executable, using the following command:
 
-     $chmod +x Main.py
-     $chmod +x stdServo.py
-     $chmod +x robotHand.py
-
+     $chmod +x RobotHand.py
 
 # Arduino Installation
 
-Upload with the [arduino IDE](http://arduino.cc/en/main/software) the program to the arduino Micro board.
+Donwload the [arduino IDE](http://arduino.cc/en/main/software).
+Place the [library for dynamixel servo](https://github.com/OpenBionics/Robot-Hands/tree/master/Software/Arduino/Libraries/DynamixelSerial) in 
+your library folder. 
+Place the RobotHand folder in your arduino workspace.
+Open the RobotHand.ino with arduino IDE.
+Select with MODE definition the servo motor that you use:
 
-For the Dynamixel AX12 servo we use this [library.](http://savageelectronics.blogspot.gr/2011/01/arduino-y-dynamixel-ax-12.html)
+    #define MODE 1 :is for stadard RC servo
+    #define MODE 2 :is for dynamixel AX12 servo
 
-# How to run ROS nodes
+Upload the program to the arduino Micro board.
 
-To run this ROS package, you have to run one of the following launch files:
+# How to run ROS node
 
-    $roslaunch openbionics stdServo.launch
-    $roslaunch openbionics HandAX12.launch
+To run this ROS package, you have to run the launch file:
 
-In the launch file you can set up the USB port, to establish serial communication with the robot hand. For the robot hand with the AX12 servo, the server node returns the state of the servo motor: 1) the goal position, 2) the current position and 3) the load. In order to do so, the robotHand.py node publishes the state of the motor, in the Hand ROS topic.
+    $roslaunch openbionics RobotHand.launch
+
+In the launch file you can set up the USB port, to establish serial communication with the robot hand. It is necessary to give write permissions
+on that port. The RobotHand node listen to RobotHandCmd topic and send those commands to arduino board via serial. The robot hand responds with 
+sending back to the host pc the acknowledgement and the state of servo motor (depending to the sending command). The RobotHand node publish the 
+acknowledgment in the RobotHandAck topic and the state of motor in MotorState topic.
+If the acknowledgment is 0 means that robot hand receives acceptable command, but if it is -1 means that you have send wrong command. The motor 
+state package has the following format:
+    
+    acknowledgment;angle (deg);load (0-1023 for CCW, 1024-2047 for CW)\n
 
 # How to control the robot hand
 
 To control the robot hand you can use the following command:
 
-    $rosrun openbionics Main.py arg1 arg2 arg3
+    $rostopic pub -1 /RobotHandCmd openbionics/Command "cmd: 'arg'" 
 
-Replace the arg1 with STD or AX12 depending on your servo. Replace the arg2 with the command that you want send to robot hand (e.g., PS is used for position control of the servo). Replace the arg3 with the desired joint angle value (the ranges are: 0 – 218 for stdServo, 100 – 1023 for AX12). 
+Replace the arg: 
+
+    ps "angle in deg", the angle depends on the servo motor
+    vl "velocity in deg/s", the velocity depends on the servo motor
+    gs, to get the state of servo motor
+
+In order to view the acknowledgment and the state of motor you can use the following commands:
+
+	$rostopic echo /MotorState
+	$rostopic echo /RobotHandAck
