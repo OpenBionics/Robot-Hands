@@ -27,14 +27,17 @@ class RobotHand():
 
     def CommandCB(self, OutData):
         self.MCUCommunication(OutData.cmd)
+        print "\ncommand:", OutData.cmd
         self.ack = Acknowledge()
         self.ack.ack = int(self.InData[0])
         self.RobotHandAckPub.publish(self.ack)
+        print self.ack
         if len(self.InData) > 1 :
             self.state = MotorState()
             self.state.position = float(self.InData[1])
             self.state.load = float(self.InData[2])
-            self.MotorStatePub.publish(self.state)   
+            self.MotorStatePub.publish(self.state)
+            print self.state
         self.rate.sleep()
 
     def MCUCommunication(self, cmd):        
@@ -51,6 +54,8 @@ if __name__ == '__main__':
     rospy.init_node('RobotHand')
 
     Hand = RobotHand()
+
+    print "\n[INFO]: Robot Hand is ready."
 
     while not rospy.is_shutdown():
         rospy.spin()
