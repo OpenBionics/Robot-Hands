@@ -24,7 +24,13 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
   MODE 1 for Standard Servo
   MODE 2 for AX12 Servo
 */
-#define MODE 1
+#define MODE 2
+
+/*
+  EXTENSION 0 without RobotHandExtension
+  EXTENSION 1 with RobotHandExtension
+*/
+#define EXTENSION 0
 
 #if MODE == 1
   #include <Servo.h>
@@ -46,6 +52,11 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
   #define DynVel 0.666   /* deg/s */
   #define MaxVel 350 /* Max Velocity */
 #endif
+
+#if EXTENSION == 1
+  #define OpenButton 6
+  #define CloseButton 9
+  #define StepAngle 2
 #endif
 
 #define BaudRate 115200
@@ -82,6 +93,10 @@ void setup()
     delay(1000);
     MoveServoPosition(0);
     Dynamixel.ledStatus(ID, OFF);
+  #endif
+  #if EXTENSION == 1
+    pinMode(OpenButton, INPUT);
+    pinMode(CloseButton, INPUT);
   #endif
 }
 
@@ -177,13 +192,30 @@ void loop()
         BufferCnt ++;
       }
     }
-    else 
-    {
-      /* Fill the buffer with incoming data */
-      Buffer[BufferCnt] = IncomingByte;
-      BufferCnt ++;
-    }
-  }
+   #elif EXTENSION == 1
+     static int OpenState = 0;
+     static int CloseState = 0;
+     static float pos = 0;
+
+     /* Read push buttons */
+     OpenState = digitalRead(OpenButton);
+     CloseState = digitalRead(CloseButton);
+     delay(20);
+
+     if (OpenState == HIGH && CloseState == LOW)
+     {
+       pos += StepAngle;
+     }
+     else if (OpenState == LOW && CloseState == HIGH)
+     {
+       pos -= StepAngle;
+     }
+     if (pos < 0)
+       pos = 0;
+     else if (pos > MaxAngle)
+       pos = MaxAngle;
+     MoveServoPosition(pos);
+   #endif
 }
 
 /* Get state of motor */
