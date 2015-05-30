@@ -31,18 +31,21 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
   #define StdPin 10
   #define MaxPulse 2400 /* Pulse in us */
   #define MinPulse 544 /* Pulse in us */
-  #define StdAngle 218 /* Full rotation in deg */
+  #define MaxAngle 218 /* Full rotation in deg */
+  #define MaxVel 300 /* Max Velocity deg/s */
   Servo StdServo;
 #elif MODE == 2
   #include <DynamixelSerial.h>
   #define DynPin 2
   #define MaxPos 1023
   #define MinPos 0
-  #define DynAngle 300 /* Full rotation */
+  #define MaxAngle 300 /* Full rotation in deg */
   #define DynBaudRate 1000000
   #define ID 1
   #define MaxTorque 1023
   #define DynVel 0.666   /* deg/s */
+  #define MaxVel 350 /* Max Velocity */
+#endif
 #endif
 
 #define BaudRate 115200
@@ -84,81 +87,94 @@ void setup()
 
 void loop()
 {
-  char Buffer[BufferSize];
-  char IncomingByte;
-  char *Data = Buffer;
-  static float GoalPos = 0;
-  static float GoalVl = 0;
-  static int BufferCnt = 0;
+  #if EXTENSION == 0
+    char Buffer[BufferSize];
+    char IncomingByte;
+    char *Data = Buffer;
+    static float GoalPos = 0;
+    static float GoalVl = 0;
+    static int BufferCnt = 0;
 
-  while (Serial.available() > 0)
-  {
-    IncomingByte = Serial.read();
-    /* New data */
-    if (IncomingByte == '\n')
+    while (Serial.available() > 0)
     {
-      Buffer[BufferCnt]=0;
-      /* Set Position */
-      if ((Buffer[0] == 'p' && Buffer[1] == 's') || (Buffer[0] == 'P' && Buffer[1] == 'S'))
+      IncomingByte = Serial.read();
+      /* New data */
+      if (IncomingByte == '\n')
       {
-        strncpy(Data, Buffer+2, 100);
-        if (isNumber(Data) && *Data != 0)
+        Buffer[BufferCnt]=0;
+        /* Set Position */
+        if ((Buffer[0] == 'p' && Buffer[1] == 's') || (Buffer[0] == 'P' && Buffer[1] == 'S'))
         {
-          GoalPos = atof(Data);
-          MoveServoPosition(GoalPos);
-          /* Return 0 is OK */
-          Serial.print("0");
-          Serial.print("\n");
+          strncpy(Data, Buffer+2, 100);
+          if (isNumber(Data) && *Data != 0 && atof(Data) >= 0 && atof(Data) <= MaxAngle)
+          {
+            GoalPos = atof(Data);
+            MoveServoPosition(GoalPos);
+            /* Return 0 is OK */
+            Serial.print("0");
+            Serial.print("\n");
+          }
+          else
+          {
+            /* Wrong Command return -1 */
+            Serial.print("-1");
+            Serial.print("\n");
+          }
+          /* Reset Buffer Counter */
+          BufferCnt = 0;
+        }
+        /* Set Velocity */
+        else if ((Buffer[0] == 'v' && Buffer[1] == 'l') || (Buffer[0] == 'V' && Buffer[1] == 'L'))
+        {
+          strncpy(Data, Buffer+2, 100);
+          if (isNumber(Data) && *Data != 0 && atof(Data) >= -MaxVel && atof(Data) <= MaxVel)
+          {
+            GoalVl = atof(Data);
+            MoveServoVelocity(GoalVl);
+            /* Return 0 is OK */
+            Serial.print("0");
+            Serial.print("\n");
+          }
+          else
+          {
+            /* Wrong Command return -1 */
+            Serial.print("-1");
+            Serial.print("\n");
+          }
+          /* Reset Buffer Counter */
+          BufferCnt = 0;
+        }
+        /* Get State of Servo Motor */
+        else if ((Buffer[0] == 'g' && Buffer[1] == 's') || (Buffer[0] == 'G' && Buffer[1] == 'S'))
+        {
+          strncpy(Data, Buffer+2, 100);
+          if (*Data == 0)
+          {
+            GetServoState();
+          }
+          else
+          {
+            /* Wrong Command return -1 */
+            Serial.print("-1");
+            Serial.print("\n");
+          }
+          /* Reset Buffer Counter */
+          BufferCnt = 0;
         }
         else
+        {
+          /* Reset Buffer Counter */
+          BufferCnt = 0;
           /* Wrong Command return -1 */
           Serial.print("-1");
           Serial.print("\n");
-        /* Reset Buffer Counter */
-        BufferCnt = 0;
-      }
-      /* Set Velocity */
-      else if ((Buffer[0] == 'v' && Buffer[1] == 'l') || (Buffer[0] == 'V' && Buffer[1] == 'L'))
-      {
-        strncpy(Data, Buffer+2, 100);
-        if (isNumber(Data) && *Data != 0)
-        {
-          GoalVl = atof(Data);
-          MoveServoVelocity(GoalVl);
-          /* Return 0 is OK */
-          Serial.print("0");
-          Serial.print("\n");
         }
-        else
-          /* Wrong Command return -1 */
-          Serial.print("-1");
-          Serial.print("\n");
-        /* Reset Buffer Counter */
-        BufferCnt = 0;
-      }
-      /* Get State of Servo Motor */
-      else if ((Buffer[0] == 'g' && Buffer[1] == 's') || (Buffer[0] == 'G' && Buffer[1] == 'S'))
-      {
-        strncpy(Data, Buffer+2, 100);
-        if (*Data == 0)
-        {
-          GetServoState();
-        }
-        else
-          /* Wrong Command return -1 */
-          Serial.print("-1");
-          Serial.print("\n");
-        /* Reset Buffer Counter */
-        BufferCnt = 0;
-
       }
       else
       {
-        /* Reset Buffer Counter */
-        BufferCnt = 0;
-        /* Wrong Command return -1 */
-        Serial.print("-1");
-        Serial.print("\n");
+        /* Fill the buffer with incoming data */
+        Buffer[BufferCnt] = IncomingByte;
+        BufferCnt ++;
       }
     }
     else 
@@ -231,9 +247,9 @@ void MoveServoVelocity(float GoalVl)
 double signal2deg(int Signal)
 {
   #if MODE == 1
-    return (double(Signal-MaxPulse)/double(MinPulse-MaxPulse))*StdAngle;
+    return (double(Signal-MaxPulse)/double(MinPulse-MaxPulse))*MaxAngle;
   #elif MODE == 2
-    return (Signal*double(DynAngle)/double(MaxPos));
+    return (Signal*double(MaxAngle)/double(MaxPos));
   #endif
 }
 
@@ -241,9 +257,9 @@ double signal2deg(int Signal)
 int deg2signal(double deg)
 {
   #if MODE == 1
-    return MaxPulse+(MinPulse-MaxPulse)*deg/StdAngle ;
+    return MaxPulse+(MinPulse-MaxPulse)*deg/MaxAngle ;
   #elif MODE == 2
-    return MaxPos*deg/DynAngle;
+    return MaxPos*deg/MaxAngle;
   #endif
 }
 
