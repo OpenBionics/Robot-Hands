@@ -63,3 +63,29 @@ In order to view the acknowledgment and the state of motor you can use the follo
 
 	$rostopic echo /MotorState
 	$rostopic echo /RobotHandAck
+
+# Interfaces
+
+It is not necessary to use the planner PC for the control of the robot hand. The user could also use the proposed interfaces.
+
+#####RobotHandExtension
+The firmware for RobotHandExtension interface is inside in RobotHand.ino and is active:
+
+    #define EXTENSION 1: with RobotHandExtension interface 
+
+and deactive:
+
+    #define EXTENSION 0: without RobotHandExtension interface
+
+#####SliderBox
+The SliderBox interface requires the use of planner PC. The ROS node that reads the commands from SliderBox writes in RobotHandCmd topic.
+Also, with this interface an additional arduino is needed. The firmware for arduino is placed in Arduino/SliderBox.
+In order to run SliderBox ROS node, make sure that it is executable, using the following command:
+
+     $chmod +x SliderBox.py
+
+and run it:
+
+    $rosrun openbionics SliderBox.py "usb port" (e.g /dev/ttyACM0)
+
+Before you execute the above command, you must run the lauchn file as mentioned above (How to run ROS node).
