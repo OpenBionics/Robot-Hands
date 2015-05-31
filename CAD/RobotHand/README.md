@@ -17,4 +17,7 @@
 	Weight(g): 280
 	Number of Fingers: 2-4
 
- A complete tutorial for the replication of this robot hand can be found [here.](http://www.openbionics.org/TR2015_OpenBionics_RobotHandsGuide.pdf)
+To change the design or fabrication parameters you must change the dimensions of the RobotHandParameters.SLDPRT sketch.
+
+A complete tutorial for the replication of this robot hand can be found
+[here.](http://www.openbionics.org/TR2015_OpenBionics_RobotHandsGuide.pdf)

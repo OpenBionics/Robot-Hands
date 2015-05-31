@@ -88,4 +88,5 @@ and run it:
 
     $rosrun openbionics SliderBox.py "usb port" (e.g /dev/ttyACM0)
 
-Before you execute the above command, you must run the lauchn file as mentioned above (How to run ROS node).
+Before you execute the above command, you must run the launch file as mentioned above (How to run ROS node), and to give write
+permissions on that port.

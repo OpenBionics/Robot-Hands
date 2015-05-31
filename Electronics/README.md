@@ -8,8 +8,7 @@ More information about Arduino Micro can be found [here.](http://arduino.cc/en/M
 # Pinout
 The Pin Mapping of the Arduino Micro Pro "Shield".
 
-![PCB](https://raw.github.com/zisi/openBionics/master/Pics/PCB1.png)
-
+<img src="https://raw.github.com/zisi/openBionics/master/Pics/PCB1.png" width="60%" height="60%" />
 
 # Build of Materials of main PCB
 	Part           Value              Device             Package 
@@ -29,7 +28,7 @@ The Pin Mapping of the Arduino Micro Pro "Shield".
 
 You can attach the PCB at the PCBMount.STL part of the robot hands, using two M2x8 screws and two M2 nuts.
 
-![PCBMount](https://raw.github.com/zisi/openBionics/master/Pics/PCB2.jpg)
+<img src="https://raw.github.com/zisi/openBionics/master/Pics/PCB2.jpg" width="60%" height="60%" />
 
 # Interfaces
 

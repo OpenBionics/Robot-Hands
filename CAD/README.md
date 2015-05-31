@@ -7,9 +7,9 @@ in order to replicate the proposed designs.
 
 The designs of parts (Solidworks .SLDASM .SLDPRT) are parametric. Thus, the user could choose the appropiate dimensions that he wants.
 A guide by which inspired is [here](http://www.eng.yale.edu/grablab/openhand/OpenHand%20CAD%20Guide.pdf). The picture below and tables
-show the parameters and limits of the values that can take. 
+show the parameters and limits of the values. 
 
-<img src="https://raw.github.com/zisi/openBionics/master/Pics/Parameters.png" width="800" height="800" />
+<img src="https://raw.github.com/zisi/openBionics/master/Pics/Parameters.png" width="80%" height="80%" />
 
 #####Design Parameters
 	Name of parameter: limits, default value
@@ -36,10 +36,11 @@ show the parameters and limits of the values that can take.
 
 In order to print or cut the parts in correct dimensions is necessary to add in design the above parameters.
 
-More information about the fabrication parameters you can find [here for 3d printer](http://www.eng.yale.edu/grablab/openhand/OpenHand%20CAD%20Guide.pdf) and [here for laser cutter](http://support.ponoko.com/entries/498833-How-to-make-interlocking-acrylic-designs)
+More information about the fabrication parameters you can find [here for 3d printer](http://www.eng.yale.edu/grablab/openhand/OpenHand%20CAD%20Guide.pdf) and [here for laser cutter](http://support.ponoko.com/entries/498833-How-to-make-interlocking-acrylic-designs).
+
 # Robot Finger Structure
 
-<img src="https://raw.github.com/zisi/openBionics/master/Pics/Finger.png" width="500" height="500" />
+<img src="https://raw.github.com/zisi/openBionics/master/Pics/Finger.png" width="60%" height="60%" />
 # Replicating the Robot Hand Design
 
 In order to replicate this design of robot hands, you will need the below materials.
@@ -55,6 +56,6 @@ In order to replicate this design of robot hands, you will need the below materi
 	[9] Long Darners 
 	[10] Nylon Fishing Line (not shown in the image)
 	
-<img src="https://raw.github.com/zisi/openBionics/master/Pics/materialsNum.png" width="600" height="600" />
+<img src="https://raw.github.com/zisi/openBionics/master/Pics/materialsNum.png" width="60%" height="60%" />
 
 For more information about [design](http://www.openbionics.org/?page_id=38)	
