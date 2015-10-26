@@ -6,18 +6,18 @@ from serial import *
 def SliderBox():
     SliderBoxCmd = rospy.Publisher(
                  'RobotHandCmd', Command, 
-                 queue_size = 10)
+                 queue_size = 100)
     rospy.init_node('SliderBox', anonymous=True)
-    rate = rospy.Rate(100) # 10hz
+    rate = rospy.Rate(200)
     while not rospy.is_shutdown():
-        # Send Command to SliderBox and Read the Response
-        cmd = SliderBoxSerial("gs")
-        cmd  = cmd[:-1].split(';')
-        if (int(cmd[0]) == 0):
-            # Send to Robot Hand the Command
-            cmd = 'ps %s' % cmd[1] 
-            SliderBoxCmd.publish(cmd)
-            rate.sleep()
+		# Send Command to SliderBox and Read the Response
+		cmd = SliderBoxSerial("gs")
+		cmd  = cmd[:-1].split(';')
+		if (int(cmd[0]) == 0):
+			# Send to Robot Hand the Command
+			cmd = 'ps %s' % cmd[1]
+			SliderBoxCmd.publish(cmd)
+			rate.sleep()
         
 def SliderBoxSerial(cmd):        
     # Write data package
@@ -43,3 +43,4 @@ if __name__ == '__main__':
         SliderBox()
     except rospy.ROSInterruptException:
         pass
+

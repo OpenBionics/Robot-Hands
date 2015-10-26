@@ -15,15 +15,15 @@ class RobotHand():
             sys.exit(1)
         self.MCU.close()
 
-        self.rate = rospy.Rate(100)
+        self.rate = rospy.Rate(200)
         self.CommandSub = rospy.Subscriber(
                         'RobotHandCmd', Command, self.CommandCB)
         self.MotorStatePub = rospy.Publisher(
                            'MotorState', MotorState, 
-                           queue_size = 10)
+                           queue_size = 100)
         self.RobotHandAckPub = rospy.Publisher(
                              'RobotHandAck', Acknowledge,
-                             queue_size = 10)
+                             queue_size = 100)
 
     def CommandCB(self, OutData):
         self.MCUCommunication(OutData.cmd)
