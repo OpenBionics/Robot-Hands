@@ -19,6 +19,7 @@ add_message_files(
   MotorState.msg
   Command.msg
   Acknowledge.msg
+  EMGValues.msg
 )
 
 ## Generate services in the 'srv' folder
